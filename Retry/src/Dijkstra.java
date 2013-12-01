@@ -13,6 +13,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 Retrieved from: http://en.literateprograms.org/Dijkstra's_algorithm_(Java)?oldid=15444
  */
 
+import java.util.InputMismatchException;
 import java.util.PriorityQueue;
 import java.util.List;
 import java.util.ArrayList;
@@ -64,7 +65,7 @@ public class Dijkstra {
 			// Visit each edge exiting u
 			for (Edge e : u.adjacencies) {
 				Vertex v = e.target;
-				double weight = (100000000/e.weight);
+				double weight = (100000000 / e.weight);
 				double distanceThroughU = u.minDistance + weight;
 				if (distanceThroughU < v.minDistance) {
 					vertexQueue.remove(v);
@@ -85,42 +86,67 @@ public class Dijkstra {
 		Collections.reverse(path);
 		return path;
 	}
-	
-	
-	//file reader
-	public String readFile(String filename)
-	{
-	   String content = null;
-	   File file = new File("ARPA.txt"); //for ex foo.txt
-	   try {
-	       FileReader reader = new FileReader(file);
-	       char[] chars = new char[(int) file.length()];
-	       reader.read(chars);
-	       content = new String(chars);
-	       reader.close();
-	   } catch (IOException e) {
-	       e.printStackTrace();
-	   }
-	   return content;
+
+	// file reader
+	public String readFile(String filename) {
+		String content = null;
+		File file = new File("ARPA.txt"); // for ex foo.txt
+		try {
+			FileReader reader = new FileReader(file);
+			char[] chars = new char[(int) file.length()];
+			reader.read(chars);
+			content = new String(chars);
+			reader.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return content;
 	}
-	
-	
-	public static void linkUseCount(int numberOfNodes, String path){
-		
-		 int useMatrix[][];
-		
-		Scanner sc = new Scanner(path);
-		useMatrix[sc.nextInt()][sc.nextInt()]=++;
-		
+
+	public static void linkUseCount(int numberOfNodes, String path) {
+
+		int[][] useMatrix = new int[numberOfNodes][numberOfNodes]; // 2d array
+
+		for (int row = 0; row < numberOfNodes; row++) { // initialize array with
+														// all 0s
+			for (int column = 0; column < numberOfNodes; column++) {
+				useMatrix[row][column] = 0;
+			}
+		}
+		try {
+			Scanner sc = new Scanner(path);
+			
+//			int a = sc.nextInt();
+//			System.out.println(a);
+			
+//			useMatrix = deeper(sc.nextInt(), useMatrix, sc); // call recursive
+																// method
+																// sending it
+																// the name of
+																// the first
+																// node
+
+			sc.close();
+		} catch (InputMismatchException e) {
+			System.out.print(e.getMessage()); // try to find out specific
+												// reason.
+			e.printStackTrace();
+		}
+
+	}
+
+	public static int[][] deeper(int previous, int[][] theArray, Scanner sc) {
+		int next = sc.nextInt();
+		theArray[previous][next] = theArray[previous][next]++;
+		if (sc.hasNext()) {
+			deeper(next, theArray, sc);
+		}
+		return theArray;
 	}
 
 	public static void main(String[] args) {
-		//importing text file
-		
-		
-		
-		
-		
+		// importing text file
+
 		Vertex v1 = new Vertex("1");
 		Vertex v2 = new Vertex("2");
 		Vertex v3 = new Vertex("3");
@@ -143,99 +169,84 @@ public class Dijkstra {
 		Vertex v20 = new Vertex("20");
 		Vertex v21 = new Vertex("21");
 
-		v1.adjacencies = new Edge[] { 
-				new Edge(v2, 1200000), 
-				new Edge(v8, 1500000),
-				new Edge(v12, 1300000),
+		v1.adjacencies = new Edge[] { new Edge(v2, 1200000),
+				new Edge(v8, 1500000), new Edge(v12, 1300000),
 				new Edge(v16, 1500000) };
-		
+
 		v2.adjacencies = new Edge[] { new Edge(v1, 1200000),
-				new Edge(v3, 1200000),
-				new Edge(v11, 1500000),
-				new Edge(v13, 1300000),};
-		
-		v3.adjacencies = new Edge[] { new Edge(v4, 1500000)};
-		
+				new Edge(v3, 1200000), new Edge(v11, 1500000),
+				new Edge(v13, 1300000), };
+
+		v3.adjacencies = new Edge[] { new Edge(v4, 1500000) };
+
 		v4.adjacencies = new Edge[] { new Edge(v3, 1500000),
-				new Edge(v5, 1300000)};
-		
+				new Edge(v5, 1300000) };
+
 		v5.adjacencies = new Edge[] { new Edge(v4, 1300000),
-				new Edge(v6, 2000000),
-				new Edge(v10, 1400000)};
-		
-		
-		v6.adjacencies = new Edge[] { new Edge(v5, 2000000), 
+				new Edge(v6, 2000000), new Edge(v10, 1400000) };
+
+		v6.adjacencies = new Edge[] { new Edge(v5, 2000000),
 				new Edge(v7, 1900000) };
-		
-		v7.adjacencies = new Edge[] { new Edge(v6, 1900000), 
+
+		v7.adjacencies = new Edge[] { new Edge(v6, 1900000),
 				new Edge(v9, 1500000) };
-		
-		v8.adjacencies = new Edge[] { new Edge(v14, 1500000)};
-		
-		v9.adjacencies = new Edge[] { new Edge(v21, 1300000)};
-		
-		v10.adjacencies = new Edge[] { new Edge(v15, 1500000)};
-		
-		v11.adjacencies = new Edge[] { new Edge(v15, 1400000)};
-		
 
-		v12.adjacencies = new Edge[] { new Edge(v16, 1500000)};
-		
+		v8.adjacencies = new Edge[] { new Edge(v14, 1500000) };
 
-		v13.adjacencies = new Edge[] { new Edge(v17, 1600000)};
-		
-		
-		v14.adjacencies = new Edge[] {new Edge(v8, 1500000),
-				new Edge(v17, 1500000)};
-		
-		v15.adjacencies = new Edge[] {new Edge(v10, 1500000),
-				new Edge(v11, 1400000),
-				new Edge(v19, 1400000)};
-		
-		v16.adjacencies = new Edge[] {new Edge(v12, 1500000),
-				new Edge(v17, 1500000)};
-		
-		v17.adjacencies = new Edge[] {new Edge(v13, 1600000),
-				new Edge(v14, 1500000),
-				new Edge(v16, 1500000),
-				new Edge(v18, 1400000)};
-		
-		v18.adjacencies = new Edge[] {new Edge(v17, 1400000),
-				new Edge(v19, 1500000)};
-		
-		v19.adjacencies = new Edge[] {new Edge(v15, 1400000),
-				new Edge(v18, 1500000),
-				new Edge(v20, 2000000)};
-		
-		v20.adjacencies = new Edge[] {new Edge(v19, 2000000),
-				new Edge(v21, 1700000)};
-		
-		v21.adjacencies = new Edge[] {new Edge(v9, 1300000),
-				new Edge(v20, 1700000)};
-		
-		
-		
-		
-		
-		
-		
-		Vertex[] vertices = {v1, v2, v3, v4, v5, v6, v7, v8 , v9 , v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20, v21 };
+		v9.adjacencies = new Edge[] { new Edge(v21, 1300000) };
+
+		v10.adjacencies = new Edge[] { new Edge(v15, 1500000) };
+
+		v11.adjacencies = new Edge[] { new Edge(v15, 1400000) };
+
+		v12.adjacencies = new Edge[] { new Edge(v16, 1500000) };
+
+		v13.adjacencies = new Edge[] { new Edge(v17, 1600000) };
+
+		v14.adjacencies = new Edge[] { new Edge(v8, 1500000),
+				new Edge(v17, 1500000) };
+
+		v15.adjacencies = new Edge[] { new Edge(v10, 1500000),
+				new Edge(v11, 1400000), new Edge(v19, 1400000) };
+
+		v16.adjacencies = new Edge[] { new Edge(v12, 1500000),
+				new Edge(v17, 1500000) };
+
+		v17.adjacencies = new Edge[] { new Edge(v13, 1600000),
+				new Edge(v14, 1500000), new Edge(v16, 1500000),
+				new Edge(v18, 1400000) };
+
+		v18.adjacencies = new Edge[] { new Edge(v17, 1400000),
+				new Edge(v19, 1500000) };
+
+		v19.adjacencies = new Edge[] { new Edge(v15, 1400000),
+				new Edge(v18, 1500000), new Edge(v20, 2000000) };
+
+		v20.adjacencies = new Edge[] { new Edge(v19, 2000000),
+				new Edge(v21, 1700000) };
+
+		v21.adjacencies = new Edge[] { new Edge(v9, 1300000),
+				new Edge(v20, 1700000) };
+
+		Vertex[] vertices = { v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11,
+				v12, v13, v14, v15, v16, v17, v18, v19, v20, v21 };
 
 		computePaths(v1);
 		for (Vertex v : vertices) {
 			System.out.println("Distance to " + v + ": " + v.minDistance);
 			List<Vertex> path = getShortestPathTo(v);
-			System.out.println("Path: " + path);
+			linkUseCount(21, path.toString()); // TEMP hardcoded to 21
+//			System.out.println("Path: " + path);
+			System.out.println(path);
 		}
-		
 
-			computePaths(v2);
-			for (Vertex v : vertices) {
-				System.out.println("Distance to " + v + ": " + v.minDistance);
-				List<Vertex> path = getShortestPathTo(v);
-				System.out.println("Path: " + path);
-			
+		computePaths(v2);
+		for (Vertex v : vertices) {
+			System.out.println("Distance to " + v + ": " + v.minDistance);
+			List<Vertex> path = getShortestPathTo(v);
+			System.out.println("Path: " + path);
+
 		}
-		
+
 	}
 }
