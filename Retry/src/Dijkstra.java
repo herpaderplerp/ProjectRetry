@@ -24,6 +24,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
 
+
 class Vertex implements Comparable<Vertex> {
 	public final String name;
 	public Edge[] adjacencies;
@@ -157,7 +158,7 @@ public class Dijkstra {
 	public static void main(String[] args) {
 		// importing text file
 
-		int numberOfNodes = 21;// read from text file
+		int numberOfNodes = 22;// read from text file
 		int[][] useMatrix = new int[numberOfNodes][numberOfNodes]; // 2d array
 
 		for (int row = 0; row < numberOfNodes; row++) { // initialize array with
@@ -166,7 +167,10 @@ public class Dijkstra {
 				useMatrix[row][column] = 0;
 			}
 		}
+		
+		
 
+		
 		Vertex v1 = new Vertex("1");
 		Vertex v2 = new Vertex("2");
 		Vertex v3 = new Vertex("3");
