@@ -24,7 +24,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
 
-
 class Vertex implements Comparable<Vertex> {
 	public final String name;
 	public Edge[] adjacencies;
@@ -115,7 +114,7 @@ public class Dijkstra {
 			Scanner sc = new Scanner(path);
 
 			int firstNode = sc.nextInt();
-			if (sc.hasNextInt()) { //if this isn't the first lookup....
+			if (sc.hasNextInt()) { // if this isn't the first lookup....
 				useMatrix = deeper(firstNode, useMatrix, sc);
 				// call
 				// recursive
@@ -127,35 +126,63 @@ public class Dijkstra {
 			}
 
 			sc.close();
-			
+
 		} catch (InputMismatchException e) {
 			System.out.print(e.getMessage()); // try to find out specific
 												// reason.
 			e.printStackTrace();
 		}
-		
-	return useMatrix;
+
+		return useMatrix;
 
 	}
 
 	public static int[][] deeper(int previous, int[][] theArray, Scanner sc) {
 		int next = sc.nextInt();
-		theArray[previous][next]= theArray[previous][next] + 1;
-		
+		theArray[previous][next] = theArray[previous][next] + 1;
+
 		if (sc.hasNext()) {
 			deeper(next, theArray, sc);
 		}
 		return theArray;
 	}
+
+	public static void printUseMatrix(int[][] useMatrix, int numberOfNodes) { // does
+																				// not
+																				// work
+		int column = 0;
+		String output = null;
+
+		while (column < numberOfNodes) { // print column index
+			System.out.print(column + " ");
+			column++;
+		}
+
+		for (int row = 0; row < useMatrix.length; row++) {
+			for (int col = 0; col < useMatrix[row].length; col++) {
+				output += " " + useMatrix[row][col];
+			}
+			output += "\n";
+		}
+
+		System.out.println(output);
+	}
 	
 	
-	
-	
-	public static String useArrayPrint(int[][] useMatrix){
+	public static void determineTotalUse(int [][] useMatrix,  int numberOfNodes){
+		
+		
+		
+	}
+
+	public static String useArrayPrint(int[][] useMatrix) {
 		return Arrays.deepToString(useMatrix);
 	}
 
 	public static void main(String[] args) {
+		final long startTime = System.currentTimeMillis();//start timer http://stackoverflow.com/questions/2572868/how-to-time-java-program-execution-speed
+		
+		
 		// importing text file
 
 		int numberOfNodes = 22;// read from text file
@@ -167,10 +194,7 @@ public class Dijkstra {
 				useMatrix[row][column] = 0;
 			}
 		}
-		
-		
 
-		
 		Vertex v1 = new Vertex("1");
 		Vertex v2 = new Vertex("2");
 		Vertex v3 = new Vertex("3");
@@ -260,20 +284,25 @@ public class Dijkstra {
 			System.out.println("Distance to " + v + ": " + v.minDistance);
 			List<Vertex> path = getShortestPathTo(v);
 			String test = path.toString();
-			useMatrix=linkUseCount(useMatrix, test);
-			 System.out.println("Path: " + path);
+			useMatrix = linkUseCount(useMatrix, test);
+			System.out.println("Path: " + path);
 
 		}
-		
-		
-//		System.out.print(useArrayPrint(useMatrix));
 
-//		computePaths(v2);
-//		for (Vertex v : vertices) {
-//			System.out.println("Distance to " + v + ": " + v.minDistance);
-//			List<Vertex> path = getShortestPathTo(v);
-//			System.out.println("Path: " + path);
-//		}
+		// printUseMatrix(useMatrix, numberOfNodes);
 
+		// System.out.print(useArrayPrint(useMatrix));
+
+		// computePaths(v2);
+		// for (Vertex v : vertices) {
+		// System.out.println("Distance to " + v + ": " + v.minDistance);
+		// List<Vertex> path = getShortestPathTo(v);
+		// System.out.println("Path: " + path);
+		// }
+
+		
+		final long endTime = System.currentTimeMillis();
+		System.out.println("Total execution time: " + (endTime - startTime) + " milliseconds");
+		
 	}
 }
