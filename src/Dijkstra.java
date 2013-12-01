@@ -18,6 +18,10 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import java.io.File;//added
+import java.io.FileReader;
+import java.oi.IOException;
+
 class Vertex implements Comparable<Vertex> {
 	public final String name;
 	public Edge[] adjacencies;
@@ -81,8 +85,30 @@ public class Dijkstra {
 		Collections.reverse(path);
 		return path;
 	}
+	
+	
+	//file reader
+	public String readFile(String filename)
+	{
+	   String content = null;
+	   File file = new File("ARPA.txt"); //for ex foo.txt
+	   try {
+	       FileReader reader = new FileReader(file);
+	       char[] chars = new char[(int) file.length()];
+	       reader.read(chars);
+	       content = new String(chars);
+	       reader.close();
+	   } catch (IOException e) {
+	       e.printStackTrace();
+	   }
+	   return content;
+	}
 
 	public static void main(String[] args) {
+		//importing text file
+		
+		
+		
 		Vertex v1 = new Vertex("1");
 		Vertex v2 = new Vertex("2");
 		Vertex v3 = new Vertex("3");
