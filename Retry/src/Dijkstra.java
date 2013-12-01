@@ -22,6 +22,7 @@ import java.util.Scanner;
 import java.io.File;//added
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
 
 class Vertex implements Comparable<Vertex> {
 	public final String name;
@@ -103,49 +104,68 @@ public class Dijkstra {
 		return content;
 	}
 
-	public static void linkUseCount(int numberOfNodes, String path) {
+	public static int[][] linkUseCount(int[][] useMatrix, String path) {
 
-		int[][] useMatrix = new int[numberOfNodes][numberOfNodes]; // 2d array
+		path = path.replace("[", " "); // clean up string
+		path = path.replace("]", " ");
+		path = path.replace(",", " ");
 
-		for (int row = 0; row < numberOfNodes; row++) { // initialize array with
-														// all 0s
-			for (int column = 0; column < numberOfNodes; column++) {
-				useMatrix[row][column] = 0;
-			}
-		}
 		try {
 			Scanner sc = new Scanner(path);
-			
-//			int a = sc.nextInt();
-//			System.out.println(a);
-			
-//			useMatrix = deeper(sc.nextInt(), useMatrix, sc); // call recursive
-																// method
-																// sending it
-																// the name of
-																// the first
-																// node
+
+			int firstNode = sc.nextInt();
+			if (sc.hasNextInt()) { //if this isn't the first lookup....
+				useMatrix = deeper(firstNode, useMatrix, sc);
+				// call
+				// recursive
+				// method
+				// sending it
+				// the name of
+				// the first
+				// node
+			}
 
 			sc.close();
+			
 		} catch (InputMismatchException e) {
 			System.out.print(e.getMessage()); // try to find out specific
 												// reason.
 			e.printStackTrace();
 		}
+		
+	return useMatrix;
 
 	}
 
 	public static int[][] deeper(int previous, int[][] theArray, Scanner sc) {
 		int next = sc.nextInt();
-		theArray[previous][next] = theArray[previous][next]++;
+		theArray[previous][next]= theArray[previous][next] + 1;
+		
 		if (sc.hasNext()) {
 			deeper(next, theArray, sc);
 		}
 		return theArray;
 	}
+	
+	
+	
+	
+	public static String useArrayPrint(int[][] useMatrix){
+		return Arrays.deepToString(useMatrix);
+	}
 
 	public static void main(String[] args) {
 		// importing text file
+
+		int numberOfNodes = 21;// read from text file
+		int[][] useMatrix = new int[numberOfNodes][numberOfNodes]; // 2d array
+
+		for (int row = 0; row < numberOfNodes; row++) { // initialize array with
+			// all 0s
+			for (int column = 0; column < numberOfNodes; column++) {
+				useMatrix[row][column] = 0;
+			}
+		}
 
 		Vertex v1 = new Vertex("1");
 		Vertex v2 = new Vertex("2");
@@ -235,18 +255,21 @@ public class Dijkstra {
 		for (Vertex v : vertices) {
 			System.out.println("Distance to " + v + ": " + v.minDistance);
 			List<Vertex> path = getShortestPathTo(v);
-			linkUseCount(21, path.toString()); // TEMP hardcoded to 21
+			String test = path.toString();
+			useMatrix=linkUseCount(useMatrix, test);
+			 System.out.println("Path: " + path);
+
+		}
+		
+		
+//		System.out.print(useArrayPrint(useMatrix));
+
+//		computePaths(v2);
+//		for (Vertex v : vertices) {
+//			System.out.println("Distance to " + v + ": " + v.minDistance);
+//			List<Vertex> path = getShortestPathTo(v);
 //			System.out.println("Path: " + path);
-			System.out.println(path);
-		}
-
-		computePaths(v2);
-		for (Vertex v : vertices) {
-			System.out.println("Distance to " + v + ": " + v.minDistance);
-			List<Vertex> path = getShortestPathTo(v);
-			System.out.println("Path: " + path);
-
-		}
+//		}
 
 	}
 }
