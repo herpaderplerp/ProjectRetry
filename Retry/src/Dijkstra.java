@@ -169,7 +169,12 @@ public class Dijkstra {
 	}
 	
 	
-	public static void determineTotalUse(int [][] useMatrix,  int numberOfNodes){
+	public static void determineTotalUse(int [][] useMatrix,  int numberOfNodes){//here we will eliminate the possibility of losing link uses (eg 3x1 vs 1x3)
+		int row=1, column=2; 
+		if ((useMatrix[1][2]>0||useMatrix[2][1]>0)){
+			Adjacency pee = new Adjacency();
+		}
+		
 		
 		
 		
@@ -185,7 +190,7 @@ public class Dijkstra {
 		
 		// importing text file
 
-		int numberOfNodes = 22;// read from text file
+		int numberOfNodes = 22;// read from text file +1
 		int[][] useMatrix = new int[numberOfNodes][numberOfNodes]; // 2d array
 
 		for (int row = 0; row < numberOfNodes; row++) { // initialize array with
@@ -279,6 +284,21 @@ public class Dijkstra {
 		Vertex[] vertices = { v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11,
 				v12, v13, v14, v15, v16, v17, v18, v19, v20, v21 };
 
+		
+//		
+//		for (int i=1;i<numberOfNodes;i++){ //need to find a way to run from all nodes
+//			computePaths("v"+i);
+//			for (Vertex v : vertices) {
+//				System.out.println("Distance to " + v + ": " + v.minDistance);
+//				List<Vertex> path = getShortestPathTo(v);
+//				String test = path.toString();
+//				useMatrix = linkUseCount(useMatrix, test);
+//				System.out.println("Path: " + path);
+//			}
+			
+		}
+		
+		
 		computePaths(v1);
 		for (Vertex v : vertices) {
 			System.out.println("Distance to " + v + ": " + v.minDistance);
