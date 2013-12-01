@@ -17,7 +17,7 @@ import java.util.PriorityQueue;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
-
+import java.util.Scanner;
 import java.io.File;//added
 import java.io.FileReader;
 import java.io.IOException;
@@ -103,9 +103,21 @@ public class Dijkstra {
 	   }
 	   return content;
 	}
+	
+	
+	public static void linkUseCount(int numberOfNodes, String path){
+		
+		 int useMatrix[][];
+		
+		Scanner sc = new Scanner(path);
+		useMatrix[sc.nextInt()][sc.nextInt()]=++;
+		
+	}
 
 	public static void main(String[] args) {
 		//importing text file
+		
+		
 		
 		
 		
