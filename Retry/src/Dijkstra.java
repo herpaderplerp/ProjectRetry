@@ -14,6 +14,7 @@ Retrieved from: http://en.literateprograms.org/Dijkstra's_algorithm_(Java)?oldid
  */
 
 import java.util.InputMismatchException;
+import java.util.LinkedList;
 import java.util.PriorityQueue;
 import java.util.List;
 import java.util.ArrayList;
@@ -139,7 +140,15 @@ public class Dijkstra {
 
 	public static int[][] deeper(int previous, int[][] theArray, Scanner sc) {
 		int next = sc.nextInt();
-		theArray[previous][next] = theArray[previous][next] + 1;
+		if (previous < next) {
+			/*
+			 * this ensures the lowest value is always used as column index thus
+			 * preventing the (3x1)!=(1x3) problem
+			 */
+			theArray[previous][next] = theArray[previous][next] + 1;
+		} else {
+			theArray[next][previous] = theArray[next][previous] + 1;
+		}
 
 		if (sc.hasNext()) {
 			deeper(next, theArray, sc);
@@ -147,58 +156,50 @@ public class Dijkstra {
 		return theArray;
 	}
 
-	public static void printUseMatrix(int[][] useMatrix, int numberOfNodes) { // does
-																				// not
-																				// work
-		int column = 0;
-		String output = null;
-
-		while (column < numberOfNodes) { // print column index
-			System.out.print(column + " ");
-			column++;
-		}
-
-		for (int row = 0; row < useMatrix.length; row++) {
-			for (int col = 0; col < useMatrix[row].length; col++) {
-				output += " " + useMatrix[row][col];
-			}
-			output += "\n";
-		}
-
-		System.out.println(output);
-	}
-	
-	
-	public static void determineTotalUse(int [][] useMatrix,  int numberOfNodes){//here we will eliminate the possibility of losing link uses (eg 3x1 vs 1x3)
-		int row=1, column=2; 
-		if ((useMatrix[1][2]>0||useMatrix[2][1]>0)){
-			Adjacency pee = new Adjacency();
-		}
-		
-		
-		
-		
-	}
+	// public static void printUseMatrix(int[][] useMatrix, int Constants.numberOfNodes) {
+	// // does
+	// // not
+	// // work
+	// int column = 0;
+	// String output = null;
+	//
+	// while (column < Constants.numberOfNodes) { // print column index
+	// System.out.print(column + " ");
+	// column++;
+	// }
+	//
+	// for (int row = 0; row < useMatrix.length; row++) {
+	// for (int col = 0; col < useMatrix[row].length; col++) {
+	// output += " " + useMatrix[row][col];
+	// } for (int index = 1; index < Constants.numberOfNodes; index++){
+	// vertices.add();
+	// }
+	// output += "\n";
+	// }
+	//
+	// System.out.println(output);
+	// }
 
 	public static String useArrayPrint(int[][] useMatrix) {
 		return Arrays.deepToString(useMatrix);
 	}
 
 	public static void main(String[] args) {
-		final long startTime = System.currentTimeMillis();//start timer http://stackoverflow.com/questions/2572868/how-to-time-java-program-execution-speed
-		
-		
+		final long startTime = System.currentTimeMillis();// start timer
+															// http://stackoverflow.com/questions/2572868/how-to-time-java-program-execution-speed
+
 		// importing text file
 
-		int numberOfNodes = 22;// read from text file +1
-		int[][] useMatrix = new int[numberOfNodes][numberOfNodes]; // 2d array
 
-		for (int row = 0; row < numberOfNodes; row++) { // initialize array with
+		int[][] useMatrix = new int[Constants.numberOfNodes+1][Constants.numberOfNodes+1]; // 2d array (needs to be size+1 as we are not using index0
+
+		for (int row = 0; row < Constants.numberOfNodes; row++) { // initialize array with
 			// all 0s
-			for (int column = 0; column < numberOfNodes; column++) {
+			for (int column = 0; column < Constants.numberOfNodes; column++) {
 				useMatrix[row][column] = 0;
 			}
 		}
+		
 
 		Vertex v1 = new Vertex("1");
 		Vertex v2 = new Vertex("2");
@@ -230,7 +231,7 @@ public class Dijkstra {
 				new Edge(v3, 1200000), new Edge(v11, 1500000),
 				new Edge(v13, 1300000), };
 
-		v3.adjacencies = new Edge[] { new Edge(v4, 1500000) };
+		v3.adjacencies = new Edge[] { new Edge(v2, 1200000), new Edge(v4, 1500000) };
 
 		v4.adjacencies = new Edge[] { new Edge(v3, 1500000),
 				new Edge(v5, 1300000) };
@@ -284,34 +285,28 @@ public class Dijkstra {
 		Vertex[] vertices = { v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11,
 				v12, v13, v14, v15, v16, v17, v18, v19, v20, v21 };
 
-		
+		for (int i = 1; i < 21; i++) {
+			computePaths(vertices[i]);
+			for (Vertex v : vertices) {
+				System.out.println("Distance to " + v + ": " + v.minDistance);
+				List<Vertex> path = getShortestPathTo(v);
+				String test = path.toString();
+				useMatrix = linkUseCount(useMatrix, test);
+				System.out.println("Path: " + path);
+			}
+		}
+
+//		 computePaths(v3);
+//		 for (Vertex v : vertices) {
+//		 System.out.println("Distance to " + v + ": " + v.minDistance);
+//		 List<Vertex> path = getShortestPathTo(v);
+//		 String test = path.toString();
+//		 useMatrix = linkUseCount(useMatrix, test);
+//		 System.out.println("Path: " + path);
 //		
-//		for (int i=1;i<numberOfNodes;i++){ //need to find a way to run from all nodes
-//			computePaths("v"+i);
-//			for (Vertex v : vertices) {
-//				System.out.println("Distance to " + v + ": " + v.minDistance);
-//				List<Vertex> path = getShortestPathTo(v);
-//				String test = path.toString();
-//				useMatrix = linkUseCount(useMatrix, test);
-//				System.out.println("Path: " + path);
-//			}
-			
-		}
-		
-		
-		computePaths(v1);
-		for (Vertex v : vertices) {
-			System.out.println("Distance to " + v + ": " + v.minDistance);
-			List<Vertex> path = getShortestPathTo(v);
-			String test = path.toString();
-			useMatrix = linkUseCount(useMatrix, test);
-			System.out.println("Path: " + path);
+//		 }
 
-		}
-
-		// printUseMatrix(useMatrix, numberOfNodes);
-
-		// System.out.print(useArrayPrint(useMatrix));
+		System.out.print(useArrayPrint(useMatrix));
 
 		// computePaths(v2);
 		// for (Vertex v : vertices) {
@@ -320,9 +315,9 @@ public class Dijkstra {
 		// System.out.println("Path: " + path);
 		// }
 
-		
 		final long endTime = System.currentTimeMillis();
-		System.out.println("Total execution time: " + (endTime - startTime) + " milliseconds");
-		
+		System.out.println("Total execution time: " + (endTime - startTime)
+				+ " milliseconds");
+
 	}
 }
