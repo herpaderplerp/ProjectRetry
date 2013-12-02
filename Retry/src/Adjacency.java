@@ -1,17 +1,20 @@
 
 public class Adjacency {
 
-	int node1;
-	int node2;
-	int useCount;	
+	int sourceNode;
+	int destinationNode;
+//	int useCount;
+	double cost;
+	double distance;
 	
 	
 	
-	public Adjacency(int node1,int node2, int useCount){
-		this.node1=node1;
-		this.node2=node2;
-		this.useCount=useCount;
+	public Adjacency(int argSourceNode,int argDestinationNode, double argCost, double argDistance){
+		this.sourceNode=argSourceNode;
+		this.destinationNode=argDestinationNode;
+		this.cost=argCost;
+		this.distance=argDistance;
+
 	}
-	
 	
 }
