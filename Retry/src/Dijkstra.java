@@ -13,18 +13,10 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 Retrieved from: http://en.literateprograms.org/Dijkstra's_algorithm_(Java)?oldid=15444
  */
 
-import java.util.InputMismatchException;
-import java.util.LinkedList;
 import java.util.PriorityQueue;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Scanner;
-import java.io.File;//added
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.Arrays;
 
 class Vertex implements Comparable<Vertex> {
 	public final String name;

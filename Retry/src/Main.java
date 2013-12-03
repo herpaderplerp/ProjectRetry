@@ -25,10 +25,10 @@ public class Main {
 
 				int srcnode = sc.nextInt();
 				int dstnode = sc.nextInt();
-				double cost = sc.nextDouble();
+				double speed = sc.nextDouble();
 				double distance = sc.nextDouble();
 
-				Adjacency e = new Adjacency(srcnode, dstnode, cost, distance);
+				Adjacency e = new Adjacency(srcnode, dstnode, speed, distance);
 				adj.add(e);
 
 			}
@@ -93,6 +93,56 @@ public class Main {
 		}
 		return theArray;
 	}
+	
+	
+	public LinkedList<Adjacency> adjacencyUseCounter(LinkedList<Adjacency> adj, String path){
+		
+		path = path.replace("[", " "); // clean up string
+		path = path.replace("]", " ");
+		path = path.replace(",", " ");
+
+		try {
+			Scanner sc = new Scanner(path);
+
+			int firstNode = sc.nextInt();
+			if (sc.hasNextInt()) { // if this isn't the first lookup....
+				adj  = deeperAdj(firstNode, adj, sc);
+				// call
+				// recursive
+				// method
+				// sending it
+				// the name of
+				// the first
+				// node
+			}
+
+			sc.close();
+
+		} catch (InputMismatchException e) {
+			System.out.print(e.getMessage()); // try to find out specific
+												// reason.
+			e.printStackTrace();
+		}
+
+		return adj;
+
+	}
+		
+	private LinkedList<Adjacency> deeperAdj(int previous,
+			LinkedList<Adjacency> adj, Scanner sc) {
+
+
+		int next = sc.nextInt();
+		return adj;
+
+		
+		
+		
+	}
+
+	
+	
+	
 
 	// public static void printUseMatrix(int[][] useMatrix, int
 	// Constants.numberOfNodes) {
