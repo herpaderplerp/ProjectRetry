@@ -7,7 +7,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
-
 public class Main {
 
 	// file reader
@@ -288,22 +287,31 @@ public class Main {
 		Vertex[] vertices = { v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11,
 				v12, v13, v14, v15, v16, v17, v18, v19, v20, v21 };
 
-		 for (int i = 1; i < 21; i++) {
+		 for (int i = 1; i < Constants.numberOfNodes; i++) {
 		 Dijkstra.computePaths(vertices[i]);
 		 for (Vertex v : vertices) {
-		 System.out.println("Distance to " + v + ": " + v.minDistance);
-		 List<Vertex> path = Dijkstra.getShortestPathTo(v);
-		 String test = path.toString();
-		 useMatrix = linkUseCount(useMatrix, test);
-		 System.out.println("Path: " + path);
-		 }
+			// System.out.println("Distance to " + v + ": " + v.minDistance);
+			 List<Vertex> path = Dijkstra.getShortestPathTo(v);
+			 String test = path.toString();
+			 useMatrix = linkUseCount(useMatrix, test);
+			// System.out.println("Path: " + path);
+			 }
 		 }
 
 		LinkedList<Adjacency> adj = new LinkedList<Adjacency>();
 		adj = readFile("test");
+		/*
+		 * create and fill objects
+		 */
 		
+		
+		adj=Calculations.determineLinkDelay(adj, useMatrix);
 
-
+//		for (int i = 0; i < 21; i++) {
+//			System.out.println(adj.get(i).toString());
+//		}
+		
+		
 		final long endTime = System.currentTimeMillis();
 		System.out.println("Total execution time: " + (endTime - startTime)
 				+ " milliseconds");
