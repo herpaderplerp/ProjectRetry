@@ -1,3 +1,4 @@
+package Project;
 import java.util.LinkedList;
 
 public class Calculations {
@@ -58,11 +59,20 @@ public class Calculations {
 				/*confirming the Fij doesn't exceed the Cij
 				 * then determine and set link delay
 				 */
+				System.out.println("link " + adj.get(i).getSourceNode() + " to " + adj.get(i).getDestinationNode());
+				System.out.println("Cij = " + adj.get(i).getSpeed());
+				System.out.println("Fij = " + possibleLinkFlow);
+				
 			}else{
 				/*
 				 * need to determine what todo when constraint exceeded
 				 * set
 				 */
+				System.err.println("WARNING - link " + adj.get(i).getSourceNode() + " to " + adj.get(i).getDestinationNode());
+				System.err.println("Link has exceeded maximum capacity");
+				System.err.println("Cij = " + adj.get(i).getSpeed());
+				System.err.println("Fij = " + possibleLinkFlow);
+				
 			}
 				
 

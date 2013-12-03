@@ -1,3 +1,4 @@
+package Project;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
@@ -5,6 +6,7 @@ import java.util.InputMismatchException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
+
 
 public class Main {
 
@@ -35,7 +37,6 @@ public class Main {
 
 			sc.close();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -300,6 +301,8 @@ public class Main {
 
 		LinkedList<Adjacency> adj = new LinkedList<Adjacency>();
 		adj = readFile("test");
+		
+
 
 		final long endTime = System.currentTimeMillis();
 		System.out.println("Total execution time: " + (endTime - startTime)
