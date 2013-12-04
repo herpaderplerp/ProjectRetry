@@ -107,16 +107,28 @@ public class Calculations {
 			 */
 
 			routs.get(adj.get(i).getSourceNode()).addTotalInputFlow(
-					adj.get(i).getFij());
+					(adj.get(i).getFij()));
 			routs.get(adj.get(i).getDestinationNode()).addTotalInputFlow(
-					adj.get(i).getFij());		
-			
+					(adj.get(i).getFij()));
 			/*
-			 * set processing delay
+			 * set total input flow for every router
 			 */
 
 		}
 
+		for (int i = 1; routs.size() < Constants.numberOfNodes + 1; i++) {
+			
+			routs.get(i).setProcessingDelay();
+			/*
+			 * will take info already in object to generate processingdelay
+			 * value
+			 */
+			}
+
+		/*
+		 * set processing delay calculation above determines total amount of
+		 * packets passing each router
+		 */
 		return adj;
 
 	}

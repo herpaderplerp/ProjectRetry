@@ -10,7 +10,6 @@ public class Adjacency {
 	private double Fij = Double.POSITIVE_INFINITY;
 	private boolean alreadyProcessedLink = false;
 	private double propogationDelay;
-	private double processingDelay;
 
 	public Adjacency(int argSourceNode, int argDestinationNode,
 			double argspeed, double argDistance) {

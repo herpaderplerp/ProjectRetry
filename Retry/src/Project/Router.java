@@ -2,8 +2,11 @@ package Project;
 
 public class Router {
 
-	int name;
-	double totalInputFlow=0; // bits per second
+	private int name;
+	private double totalInputFlow=0; // bits per second
+	private double processingDelay=0; //seconds
+
+
 
 	public Router(int name) {
 		this.name = name;
@@ -17,7 +20,9 @@ public class Router {
 		return totalInputFlow;
 	}
 
-	
+		public double getProcessingDelay() {
+		return processingDelay;
+	}
 	
 	/*
 	 * setter
@@ -31,4 +36,7 @@ public class Router {
 		this.totalInputFlow = +fij;
 	}
 
+	public void setProcessingDelay() {
+		this.processingDelay = (Constants.ti*(this.totalInputFlow/8/1500));
+	}
 }
