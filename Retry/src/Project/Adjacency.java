@@ -9,21 +9,27 @@ public class Adjacency {
 	private double distance;
 	private double delay = Double.POSITIVE_INFINITY;
 	private boolean alreadyProcessedLink = false;
+	private double propogationDelay;
+	private double processingDelay;
 
 	public Adjacency(int argSourceNode, int argDestinationNode,
-		double argspeed, double argDistance) {
+			double argspeed, double argDistance) {
 		this.sourceNode = argSourceNode;
 		this.destinationNode = argDestinationNode;
 		this.speed = argspeed;
 		this.distance = argDistance;
 	}
 
+	/*
+	 * getters
+	 */
+
 	public int getSourceNode() {
 		return this.sourceNode;
 	}
 
 	public int getDestinationNode() {
-		return this.sourceNode;
+		return this.destinationNode;
 	}
 
 	public int getUseCount() {
@@ -37,10 +43,18 @@ public class Adjacency {
 	public boolean getAlreadyProcessed() {
 		return this.alreadyProcessedLink;
 	}
-	
-	
-	
-	
+
+	public double getPropogationDelay() {
+		return propogationDelay;
+	}
+
+	public double getDistance() {
+		return distance;
+	}
+
+	/*
+	 * setters
+	 */
 
 	public void setUseCount(int argUseCount) {
 		this.useCount = argUseCount;
@@ -54,13 +68,19 @@ public class Adjacency {
 		this.alreadyProcessedLink = argBool;
 	}
 
-	
 	@Override
-	public String toString(){
-		
-		return this.sourceNode + " to " + this.destinationNode + " use count " + this.useCount + " speed " + this.speed 
-				+" distance " + this.distance;
-		
+	public String toString() {
+
+		return this.sourceNode + " to " + this.destinationNode + " use count "
+				+ this.useCount + " speed " + this.speed + " distance "
+				+ this.distance;
 	}
 
+	public void setPropogationDelay(double propogationDelay) {
+		this.propogationDelay = propogationDelay;
+	}
+
+	public void setDistance(double distance) {
+		this.distance = distance;
+	}
 }

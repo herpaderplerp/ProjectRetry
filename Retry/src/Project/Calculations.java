@@ -62,7 +62,7 @@ public class Calculations {
 			 * for their pair
 			 */
 
-			double possibleLinkFlow = (Constants.dPQ * adj.get(i).getUseCount());
+			double possibleLinkFlow = (Constants.dPQ * adj.get(i).getUseCount()*Constants.l);
 
 			if (possibleLinkFlow < adj.get(i).getSpeed()) {
 				adj.get(i).setDelay(
@@ -92,8 +92,19 @@ public class Calculations {
 				System.err.println("Fij = " + possibleLinkFlow);
 
 			}
+			
+			
+			adj.get(i).setPropogationDelay(adj.get(i).getDistance()*Constants.pijKM);
+			/*
+			 * set propogation delay (sec) to every adj
+			 */
+			
 
 		}
+		
+		
+		
+		
 
 		return adj;
 
