@@ -7,7 +7,7 @@ public class Adjacency {
 	private int useCount = 0;
 	private double speed;
 	private double distance;
-	private double delay = Double.POSITIVE_INFINITY;
+	private double Fij = Double.POSITIVE_INFINITY;
 	private boolean alreadyProcessedLink = false;
 	private double propogationDelay;
 	private double processingDelay;
@@ -35,6 +35,10 @@ public class Adjacency {
 	public int getUseCount() {
 		return this.useCount;
 	}
+	
+	public double getFij(){
+		return this.Fij;
+	}
 
 	public double getSpeed() {
 		return this.speed;
@@ -60,8 +64,8 @@ public class Adjacency {
 		this.useCount = argUseCount;
 	}
 
-	public void setDelay(double argDelay) {
-		this.delay = argDelay;
+	public void setFij(double Fij) {
+		this.Fij = Fij;
 	}
 
 	public void setProcessed(boolean argBool) {

@@ -15,9 +15,15 @@ public class Calculations {
 	public static LinkedList<Adjacency> determineLinkDelay(
 			LinkedList<Adjacency> adj, int[][] useMatrix) {
 
-		// for (int i = 0; i < 21; i++) {
-		// System.out.println(adj.get(i).toString());
-		// }
+		LinkedList<Router> routs = new LinkedList<Router>();
+		for (int i = 1; i < Constants.numberOfNodes + 2; i++) {
+			Router e = new Router(i);
+			routs.add(e);
+		}
+		/*
+		 * ^ make a router object for every router will be useful later for
+		 * determining total flow and processing delay
+		 */
 
 		int numberOfAdjacancies = adj.size();
 
@@ -41,7 +47,8 @@ public class Calculations {
 						 */
 					} else
 
-					if (adj.get(i).getSourceNode() < adj.get(i).getDestinationNode()) {
+					if (adj.get(i).getSourceNode() < adj.get(i)
+							.getDestinationNode()) {
 						// ensure we look at the right spot in the array
 						adj.get(i).setUseCount(
 								useMatrix[adj.get(i).getSourceNode()][adj
@@ -62,10 +69,10 @@ public class Calculations {
 			 * for their pair
 			 */
 
-			double possibleLinkFlow = (Constants.dPQ * adj.get(i).getUseCount()*Constants.l);
+			double possibleLinkFlow = (Constants.dPQ * adj.get(i).getUseCount() * Constants.l);
 
 			if (possibleLinkFlow < adj.get(i).getSpeed()) {
-				adj.get(i).setDelay(
+				adj.get(i).setFij(
 						possibleLinkFlow
 								/ (adj.get(i).getSpeed() - possibleLinkFlow));
 				/*
@@ -92,22 +99,25 @@ public class Calculations {
 				System.err.println("Fij = " + possibleLinkFlow);
 
 			}
-			
-			
-			adj.get(i).setPropogationDelay(adj.get(i).getDistance()*Constants.pijKM);
+
+			adj.get(i).setPropogationDelay(
+					adj.get(i).getDistance() * Constants.pijKM);
 			/*
 			 * set propogation delay (sec) to every adj
 			 */
+
+			routs.get(adj.get(i).getSourceNode()).addTotalInputFlow(
+					adj.get(i).getFij());
+			routs.get(adj.get(i).getDestinationNode()).addTotalInputFlow(
+					adj.get(i).getFij());		
 			
+			/*
+			 * set processing delay
+			 */
 
 		}
-		
-		
-		
-		
 
 		return adj;
 
 	}
-
 }
