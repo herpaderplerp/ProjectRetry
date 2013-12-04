@@ -6,8 +6,8 @@ public class Adjacency {
 	private int destinationNode;
 	private int useCount = 0;
 	private double speed;
-	private double distance;
-	private double Fij = Double.POSITIVE_INFINITY;
+	private double distance;  //KM
+	private double Fij = 0;
 	private boolean alreadyProcessedLink = false;
 	private double propogationDelay;
 

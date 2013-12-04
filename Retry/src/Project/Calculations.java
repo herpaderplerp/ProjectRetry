@@ -4,16 +4,11 @@ import java.util.LinkedList;
 
 public class Calculations {
 
-	public double determinePij(double linkLength) {
-		return Constants.pijKM * linkLength;
-	}
-
-	public double determineFij(int linkUse) {
-		return Constants.dPQ * linkUse;
-	}
-
-	public static LinkedList<Adjacency> determineLinkDelay(
+	public static LinkedList<Adjacency> determineDelay(
 			LinkedList<Adjacency> adj, int[][] useMatrix) {
+		
+		
+		
 
 		LinkedList<Router> routs = new LinkedList<Router>();
 		for (int i = 1; i < Constants.numberOfNodes + 2; i++) {
@@ -25,7 +20,7 @@ public class Calculations {
 		 * determining total flow and processing delay
 		 */
 
-		int numberOfAdjacancies = adj.size();
+		final int numberOfAdjacancies = adj.size();
 
 		for (int i = 0; i < numberOfAdjacancies; i++) {
 
@@ -82,24 +77,27 @@ public class Calculations {
 
 				System.out.println(adj.get(i).toString());
 
-				System.out.println("link " + adj.get(i).getSourceNode()
-						+ " to " + adj.get(i).getDestinationNode());
-				System.out.println("Cij = " + adj.get(i).getSpeed());
-				System.out.println("Fij = " + possibleLinkFlow);
+//				System.out.println("link " + adj.get(i).getSourceNode()
+//						+ " to " + adj.get(i).getDestinationNode());
+//				System.out.println("Cij = " + adj.get(i).getSpeed());
+//				System.out.println("Fij = " + possibleLinkFlow);
 
 			} else {
+				routs.get(i).setProcessingDelay();
 				/*
-				 * need to determine what todo when constraint exceeded set
+				 * will take info already in object to generate processingdelay
+				 * value
 				 */
-				System.err.println("WARNING - link "
-						+ adj.get(i).getSourceNode() + " to "
-						+ adj.get(i).getDestinationNode());
-				System.err.println("Link has exceeded maximum capacity");
-				System.err.println("Cij = " + adj.get(i).getSpeed());
-				System.err.println("Fij = " + possibleLinkFlow);
-
+			
+			/*
+			 * need to determine what todo when constraint exceeded set
+			 */
+			System.err.println("WARNING - link " + adj.get(i).getSourceNode()
+					+ " to " + adj.get(i).getDestinationNode());
+			System.err.println("Link has exceeded maximum capacity");
+			System.err.println("Cij = " + adj.get(i).getSpeed());
+			System.err.println("Fij = " + possibleLinkFlow);
 			}
-
 			adj.get(i).setPropogationDelay(
 					adj.get(i).getDistance() * Constants.pijKM);
 			/*
@@ -116,19 +114,57 @@ public class Calculations {
 
 		}
 
-		for (int i = 1; routs.size() < Constants.numberOfNodes + 1; i++) {
-			
-			routs.get(i).setProcessingDelay();
-			/*
-			 * will take info already in object to generate processingdelay
-			 * value
-			 */
-			}
-
+//		for (int i = 1; routs.size() < Constants.numberOfNodes + 1; i++) {
+//
+//			routs.get(i).setProcessingDelay();
+//			/*
+//			 * will take info already in object to generate processingdelay
+//			 * value
+//			 */
+//		}
 		/*
-		 * set processing delay calculation above determines total amount of
-		 * packets passing each router
+		 * this is not required
 		 */
+
+
+		
+		
+		
+		/*
+		 * big boy calculation below
+		 */
+		double sumOfDelay=0;
+		for (int i = 0; i < numberOfAdjacancies; i++) {
+			
+			/*
+			 * using the -alreadyprocessed- parameter to avoid adding twice
+			 */
+			if(adj.get(i).getAlreadyProcessed()==true){
+			sumOfDelay=sumOfDelay+
+					
+					((adj.get(i).getFij()/
+					(adj.get(i).getSpeed()-adj.get(i).getFij())) + 
+					
+					((adj.get(i).getPropogationDelay()+Constants.ti)*
+							
+							(adj.get(i).getFij()/
+							Constants.l)));
+			}
+			
+			
+		}
+		
+		Double networkAverageDelay;
+		networkAverageDelay=(1/Constants.delta)*sumOfDelay;
+		
+		
+		System.out.println("Sum of network delay (ms) " + sumOfDelay);
+		System.out.println("Avergae network delay (ms) " + networkAverageDelay);
+		
+		
+		
+		
+		
 		return adj;
 
 	}

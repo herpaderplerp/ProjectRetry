@@ -1,4 +1,5 @@
 package Project;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
@@ -67,8 +68,7 @@ public class Main {
 			sc.close();
 
 		} catch (InputMismatchException e) {
-			System.out.print(e.getMessage()); // try to find out specific
-												// reason.
+			System.out.print(e.getMessage());
 			e.printStackTrace();
 		}
 
@@ -83,9 +83,17 @@ public class Main {
 			 * this ensures the lowest value is always used as column index thus
 			 * preventing the (3x1)!=(1x3) problem
 			 */
+			// System.out.println("no need to reverse index");
+			System.out.println("before change, index" + previous + "x" + next
+					+ "=" + theArray[previous][next]);
 			theArray[previous][next] = theArray[previous][next] + 1;
+			System.out.println("after change " + theArray[previous][next]);
 		} else {
+			System.out.println("index was reversed");
+			System.out.println("before change, index " + next + "x" + previous
+					+ "=" + theArray[next][previous]);
 			theArray[next][previous] = theArray[next][previous] + 1;
+			System.out.println("after change " + theArray[next][previous]);
 		}
 
 		if (sc.hasNext()) {
@@ -93,81 +101,34 @@ public class Main {
 		}
 		return theArray;
 	}
-	
-	
-	public LinkedList<Adjacency> adjacencyUseCounter(LinkedList<Adjacency> adj, String path){
-		
-		path = path.replace("[", " "); // clean up string
-		path = path.replace("]", " ");
-		path = path.replace(",", " ");
 
-		try {
-			Scanner sc = new Scanner(path);
+	public static void printUseMatrix(int[][] useMatrix) {
+		// does
+		// not
+		// work
+		int column = 1;
+		String output = null;
 
-			int firstNode = sc.nextInt();
-			if (sc.hasNextInt()) { // if this isn't the first lookup....
-				adj  = deeperAdj(firstNode, adj, sc);
-				// call
-				// recursive
-				// method
-				// sending it
-				// the name of
-				// the first
-				// node
-			}
-
-			sc.close();
-
-		} catch (InputMismatchException e) {
-			System.out.print(e.getMessage()); // try to find out specific
-												// reason.
-			e.printStackTrace();
+		while (column < Constants.numberOfNodes) { // print column index
+			System.out.print(column + " ");
+			column++;
 		}
 
-		return adj;
+		output += "\n";
 
+		for (int row = 1; row < useMatrix.length; row++) {
+			output += row;
+
+			for (int col = 1; col < useMatrix[row].length; col++) {
+				output += " " + useMatrix[row][col];
+			}
+			for (int index = 1; index < Constants.numberOfNodes; index++) {
+			}
+			output += "\n";
+		}
+
+		System.out.println(output);
 	}
-		
-	private LinkedList<Adjacency> deeperAdj(int previous,
-			LinkedList<Adjacency> adj, Scanner sc) {
-
-
-		int next = sc.nextInt();
-		return adj;
-
-		
-		
-		
-	}
-
-	
-	
-	
-
-	// public static void printUseMatrix(int[][] useMatrix, int
-	// Constants.numberOfNodes) {
-	// // does
-	// // not
-	// // work
-	// int column = 0;
-	// String output = null;
-	//
-	// while (column < Constants.numberOfNodes) { // print column index
-	// System.out.print(column + " ");
-	// column++;
-	// }
-	//
-	// for (int row = 0; row < useMatrix.length; row++) {
-	// for (int col = 0; col < useMatrix[row].length; col++) {
-	// output += " " + useMatrix[row][col];
-	// } for (int index = 1; index < Constants.numberOfNodes; index++){
-	// vertices.add();
-	// }
-	// output += "\n";
-	// }
-	//
-	// System.out.println(output);
-	// }
 
 	public static String useArrayPrint(int[][] useMatrix) {
 		return Arrays.deepToString(useMatrix);
@@ -193,10 +154,10 @@ public class Main {
 		// using
 		// index0
 
-		for (int row = 0; row < Constants.numberOfNodes; row++) { // initialize
-			// array
-			// with
-			// all 0s
+		for (int row = 0; row < Constants.numberOfNodes; row++) {
+			/*
+			 * initialize with all zeros
+			 */
 			for (int column = 0; column < Constants.numberOfNodes; column++) {
 				useMatrix[row][column] = 0;
 			}
@@ -230,7 +191,7 @@ public class Main {
 
 		v2.adjacencies = new Edge[] { new Edge(v1, 1200000),
 				new Edge(v3, 1200000), new Edge(v11, 1500000),
-				new Edge(v13, 1300000), };
+				new Edge(v13, 1300000) };
 
 		v3.adjacencies = new Edge[] { new Edge(v2, 1200000),
 				new Edge(v4, 1500000) };
@@ -247,17 +208,23 @@ public class Main {
 		v7.adjacencies = new Edge[] { new Edge(v6, 1900000),
 				new Edge(v9, 1500000) };
 
-		v8.adjacencies = new Edge[] { new Edge(v14, 1500000) };
+		v8.adjacencies = new Edge[] { new Edge(v1, 1500000),
+				new Edge(v14, 1500000) };
 
-		v9.adjacencies = new Edge[] { new Edge(v21, 1300000) };
+		v9.adjacencies = new Edge[] { new Edge(v21, 1300000),
+				new Edge(v7, 1500000) };
 
-		v10.adjacencies = new Edge[] { new Edge(v15, 1500000) };
+		v10.adjacencies = new Edge[] { new Edge(v5, 1400000),
+				new Edge(v15, 1500000) };
 
-		v11.adjacencies = new Edge[] { new Edge(v15, 1400000) };
+		v11.adjacencies = new Edge[] { new Edge(v2, 1500000),
+				new Edge(v15, 1400000) };
 
-		v12.adjacencies = new Edge[] { new Edge(v16, 1500000) };
+		v12.adjacencies = new Edge[] { new Edge(v1, 1300000),
+				new Edge(v16, 1500000) };
 
-		v13.adjacencies = new Edge[] { new Edge(v17, 1600000) };
+		v13.adjacencies = new Edge[] { new Edge(v2, 1300000),
+				new Edge(v17, 1600000) };
 
 		v14.adjacencies = new Edge[] { new Edge(v8, 1500000),
 				new Edge(v17, 1500000) };
@@ -265,8 +232,8 @@ public class Main {
 		v15.adjacencies = new Edge[] { new Edge(v10, 1500000),
 				new Edge(v11, 1400000), new Edge(v19, 1400000) };
 
-		v16.adjacencies = new Edge[] { new Edge(v12, 1500000),
-				new Edge(v17, 1500000) };
+		v16.adjacencies = new Edge[] { new Edge(v1, 1500000),
+				new Edge(v12, 1500000), new Edge(v17, 1500000) };
 
 		v17.adjacencies = new Edge[] { new Edge(v13, 1600000),
 				new Edge(v14, 1500000), new Edge(v16, 1500000),
@@ -287,31 +254,44 @@ public class Main {
 		Vertex[] vertices = { v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11,
 				v12, v13, v14, v15, v16, v17, v18, v19, v20, v21 };
 
-		 for (int i = 1; i < Constants.numberOfNodes; i++) {
-		 Dijkstra.computePaths(vertices[i]);
-		 for (Vertex v : vertices) {
-			// System.out.println("Distance to " + v + ": " + v.minDistance);
-			 List<Vertex> path = Dijkstra.getShortestPathTo(v);
-			 String test = path.toString();
-			 useMatrix = linkUseCount(useMatrix, test);
-			// System.out.println("Path: " + path);
-			 }
-		 }
+		for (int index = 0; index < Constants.numberOfNodes; index++) {
+			Dijkstra.computePaths(vertices[index]);
+			for (Vertex v : vertices) {
+				// System.out.println("Distance to " + v + ": " +
+				// v.minDistance);
+				List<Vertex> path = Dijkstra.getShortestPathTo(v);
+				String test = path.toString();
+				System.out.println("Path: " + path);
+				useMatrix = linkUseCount(useMatrix, test);
+			}
+		}
+
+		// {
+		// Dijkstra.computePaths(v2);
+		// for (Vertex v : vertices) {
+		// // System.out.println("Distance to " + v + ": " +
+		// // v.minDistance);
+		// List<Vertex> path = Dijkstra.getShortestPathTo(v);
+		// String test = path.toString();
+		// System.out.println("Path: " + path);
+		// useMatrix = linkUseCount(useMatrix, test);
+		// }
+		// }
+
+		printUseMatrix(useMatrix);
 
 		LinkedList<Adjacency> adj = new LinkedList<Adjacency>();
 		adj = readFile("test");
 		/*
 		 * create and fill objects
 		 */
-		
-		
-		adj=Calculations.determineLinkDelay(adj, useMatrix);
 
-//		for (int i = 0; i < 21; i++) {
-//			System.out.println(adj.get(i).toString());
-//		}
-		
-		
+		// adj = Calculations.determineDelay(adj, useMatrix);
+
+		// for (int i = 0; i < 21; i++) {
+		// System.out.println(adj.get(i).toString());
+		// }
+
 		final long endTime = System.currentTimeMillis();
 		System.out.println("Total execution time: " + (endTime - startTime)
 				+ " milliseconds");
