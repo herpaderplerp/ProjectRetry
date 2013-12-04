@@ -84,16 +84,17 @@ public class Main {
 			 * preventing the (3x1)!=(1x3) problem
 			 */
 			// System.out.println("no need to reverse index");
-			System.out.println("before change, index" + previous + "x" + next
-					+ "=" + theArray[previous][next]);
+			// System.out.println("before change, index" + previous + "x" + next
+			// + "=" + theArray[previous][next]);
 			theArray[previous][next] = theArray[previous][next] + 1;
-			System.out.println("after change " + theArray[previous][next]);
+			// System.out.println("after change " + theArray[previous][next]);
 		} else {
-			System.out.println("index was reversed");
-			System.out.println("before change, index " + next + "x" + previous
-					+ "=" + theArray[next][previous]);
+			// System.out.println("index was reversed");
+			// System.out.println("before change, index " + next + "x" +
+			// previous
+			// + "=" + theArray[next][previous]);
 			theArray[next][previous] = theArray[next][previous] + 1;
-			System.out.println("after change " + theArray[next][previous]);
+			// System.out.println("after change " + theArray[next][previous]);
 		}
 
 		if (sc.hasNext()) {
@@ -253,21 +254,32 @@ public class Main {
 
 		Vertex[] vertices = { v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11,
 				v12, v13, v14, v15, v16, v17, v18, v19, v20, v21 };
-
+		Dijkstra dij = new Dijkstra();
 		for (int index = 0; index < Constants.numberOfNodes; index++) {
-			Dijkstra.computePaths(vertices[index]);
+
+			dij.computePaths(vertices[index]);
+			// System.out.println(dij.printPath(vertices, index));
 			for (Vertex v : vertices) {
-				// System.out.println("Distance to " + v + ": " +
-				// v.minDistance);
-				List<Vertex> path = Dijkstra.getShortestPathTo(v);
+				System.out.println("Distance to " + v + ": " + v.minDistance);
+				List<Vertex> path = dij.getShortestPathTo(v);
+
 				String test = path.toString();
+
+				// dij.printPath(vertices, index);
+				// String test = path.toString();
 				System.out.println("Path: " + path);
 				useMatrix = linkUseCount(useMatrix, test);
 			}
+			// reset the distance for new cal
+			for (int i = 0; i < Constants.numberOfNodes; i++) {
+				vertices[i].minDistance = Double.POSITIVE_INFINITY;
+				vertices[i].previous = null;
+			}
+
 		}
 
 		// {
-		// Dijkstra.computePaths(v2);
+		// dij.computePaths(v2);
 		// for (Vertex v : vertices) {
 		// // System.out.println("Distance to " + v + ": " +
 		// // v.minDistance);
@@ -277,8 +289,9 @@ public class Main {
 		// useMatrix = linkUseCount(useMatrix, test);
 		// }
 		// }
+		//
 
-		printUseMatrix(useMatrix);
+		// printUseMatrix(useMatrix);
 
 		LinkedList<Adjacency> adj = new LinkedList<Adjacency>();
 		adj = readFile("test");
@@ -286,7 +299,12 @@ public class Main {
 		 * create and fill objects
 		 */
 
-		// adj = Calculations.determineDelay(adj, useMatrix);
+		
+		Constants.dPQ=.1;
+		while (Constants.overloadedLink == false) {
+			adj = Calculations.determineDelay(adj, useMatrix);
+			Constants.dPQ+=.1;
+		}
 
 		// for (int i = 0; i < 21; i++) {
 		// System.out.println(adj.get(i).toString());
