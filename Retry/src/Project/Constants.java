@@ -12,6 +12,7 @@ public class Constants {
 	public static boolean overloadedLink=false; //set to true when a link overloads
 	public static String filename = "results.txt";	
 	public static DecimalFormat df = new DecimalFormat("#.###"); //for cleaning up the log
+	public static double dPQincrement=0.01;
 	
 	
 	public static double getdPQ() {

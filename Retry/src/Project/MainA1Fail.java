@@ -8,7 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
-public class Main {
+public class MainA1Fail {
 
 	// file reader
 	public static LinkedList<Adjacency> readFile(String filename) {
@@ -201,9 +201,11 @@ public class Main {
 				new Edge(v5, 1300000) };
 
 		v5.adjacencies = new Edge[] { new Edge(v4, 1300000),
-				new Edge(v6, 2000000), new Edge(v10, 1400000) };
+				//new Edge(v6, 2000000), //failed link
+				new Edge(v10, 1400000) };
 
-		v6.adjacencies = new Edge[] { new Edge(v5, 2000000),
+		v6.adjacencies = new Edge[] { 
+				//new Edge(v5, 2000000), //failed link
 				new Edge(v7, 1900000) };
 
 		v7.adjacencies = new Edge[] { new Edge(v6, 1900000),
@@ -299,7 +301,7 @@ public class Main {
 		 * create and fill objects
 		 */
 
-		Constants.filename="noFail.txt";
+		Constants.filename="A1Fail.txt";
 		Constants.dPQ=.1;
 		while (Constants.overloadedLink == false) {
 			adj = Calculations.determineDelay(adj, useMatrix);
