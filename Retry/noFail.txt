@@ -105,4 +105,4 @@ DPQ 1.13 avgDelay 2.003 overload false
 DPQ 1.14 avgDelay 2.38 overload false
 DPQ 1.15 avgDelay 3.126 overload false
 DPQ 1.16 avgDelay 5.793 overload false
-DPQ 1.17 avgDelay ∞ overload true
+DPQ 1.17 avgDelay ? overload true

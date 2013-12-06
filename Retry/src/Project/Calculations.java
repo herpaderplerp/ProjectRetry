@@ -13,14 +13,15 @@ public class Calculations {
 	public static LinkedList<Adjacency> determineDelay(
 			LinkedList<Adjacency> adj, int[][] useMatrix) {
 
-		LinkedList<Router> routs = new LinkedList<Router>();
-		for (int i = 1; i < Constants.numberOfNodes + 2; i++) {
-			Router e = new Router(i);
-			routs.add(e);
-		}
+//		LinkedList<Router> routs = new LinkedList<Router>();
+//		for (int i = 1; i < Constants.numberOfNodes + 2; i++) {
+//			Router e = new Router(i);
+//			routs.add(e);
+//		}
 		/*
 		 * ^ make a router object for every router will be useful later for
 		 * determining total flow and processing delay
+		 * UPDATE: no.
 		 */
 
 		final int numberOfAdjacancies = adj.size();
@@ -114,10 +115,10 @@ public class Calculations {
 			 * set propogation delay (sec) to every adj
 			 */
 
-			routs.get(adj.get(i).getSourceNode()).addTotalInputFlow(
-					(adj.get(i).getFij()));
-			routs.get(adj.get(i).getDestinationNode()).addTotalInputFlow(
-					(adj.get(i).getFij()));
+//			routs.get(adj.get(i).getSourceNode()).addTotalInputFlow(
+//					(adj.get(i).getFij()));
+//			routs.get(adj.get(i).getDestinationNode()).addTotalInputFlow(
+//					(adj.get(i).getFij()));
 			/*
 			 * set total input flow for every router
 			 */
